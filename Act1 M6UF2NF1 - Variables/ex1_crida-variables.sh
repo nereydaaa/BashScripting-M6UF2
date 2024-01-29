@@ -6,13 +6,23 @@ arguments del Shell, el valor retornat per la darrera funció o comanda i el PID
 
 echo "Variables globals:"
 echo "-------------------"
-echo "HOME: $HOME"
-echo "USER: $USER"
-echo "PWD: $PWD"
 echo "SHELL: $SHELL"
+echo "DISPLAY: $DISPLAY"
+echo "HOME: $HOME"
+echo "PATH: $PATH"
+echo "MANPATH: $MANPATH"
+echo "PS1: $PS1"
+echo "PS2: $PS2"
+echo "USER: $USER"
+echo "TERM: $TERM"
+echo "PWD: $PWD"
 echo "-------------------"
 
 echo "Arguments Shell:"
 echo "----------------"
-
+echo "$@"
 echo "----------------"
+
+echo "Valor de sortida de l'última funció: $?"
+
+echo "PID de la Shell actual: $$"
