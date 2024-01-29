@@ -1,7 +1,7 @@
-:'
-Realitza un script que rebi 5 arguments (no cal validar-los) passats per l’usuari i 
-els mostri. Per últim, s’haurà de mostrar el nom de l’script.
-'
+
+# Realitza un script que rebi 5 arguments (no cal validar-los) passats per l’usuari i 
+# els mostri. Per últim, s’haurà de mostrar el nom de l’script.
+
 #!/bin/bash
 
 # Mostrem els 5 arguments passats
