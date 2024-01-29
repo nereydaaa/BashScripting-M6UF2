@@ -5,3 +5,10 @@ arguments del Shell, el valor retornat per la darrera funció o comanda i el PID
 #!/bin/bash
 
 echo "Variables globals:"
+echo "-------------------"
+echo "HOME: "
+echo "USER: "
+echo ""
+echo ""
+echo ""
+echo "-------------------"
