@@ -8,4 +8,4 @@ read -p "Introdueix el nom d'usuari: " username
 read -s -p "Introdueix la contrasenya: " password
 
 # Mostrem la informació per pantalla
-echo 
+echo "Usuari: $username , Contrasenya: [oculta]"
