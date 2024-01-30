@@ -5,9 +5,9 @@
 read -p "Introdueix un nombre enter: " num
 
 # Comprovem si es positiu o negatiu i mostrem el resultat
-if [$num -gt 0]; then
+if [ $num -gt 0 ]; then
   echo "El nombre és positiu."
-elif [$num -ls 0]; then
+elif [ $num -ls 0 ]; then
   echo "El nombre és negatiu."
 else
   echo "El nombre és 0."
