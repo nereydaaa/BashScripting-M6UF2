@@ -3,15 +3,30 @@
 
 # Comprovem si s'ha introduït la ruta com argument
 if [ $# -eq 0 ]; then
-  echo "Error: No s'ha introduït ruta de fitxer."
+  echo "Error: No s'ha introduït ruta."
   exit 1
 fi
 
 ruta=$1
 
-# Busquem el fitxer
+# Busquem la ruta
 if [ -e "$ruta" ]; then
-  echo "El fitxer existeix."
+  # Comprovem si es directori o fitxer
+  if [ -d "$ruta" ]; then
+    echo "És un directori."
+  elif [ -f "$ruta" ]; then
+    echo "És un fitxer."
+    # Obtenim la extensió del fitxer.
+    nom=$(basename "$ruta")
+    ext="$nom##*."
+    if [ "$ext" != "$nom" ]; then
+      echo "La extensió del fitxer és: $ext"
+    else
+      echo "El fitxer no te extensió."
+    fi
+  else
+    echo "No és ni un fitxer ni un directori."
+  fi
 else
-  echo "El fitxer no existeix."
+  echo "La ruta no existeix."
 fi
