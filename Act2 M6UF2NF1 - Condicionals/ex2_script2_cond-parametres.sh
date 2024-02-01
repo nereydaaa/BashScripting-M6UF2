@@ -9,6 +9,7 @@ fi
 
 ruta=$1
 
+# Busquem el fitxer
 if [ -e "$ruta" ]; then
   echo "El fitxer existeix."
 else
