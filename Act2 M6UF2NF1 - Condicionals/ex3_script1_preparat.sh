@@ -12,6 +12,7 @@ ruta=$1
 # Comprovem si existeix
 if [ ! -e "$ruta" ]; then
   echo "El fitxer no existeix."
+  exit 1
 fi
 
 # Obté els permisos del fitxer
