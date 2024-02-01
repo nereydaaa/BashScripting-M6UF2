@@ -18,7 +18,7 @@ if [ -e "$ruta" ]; then
     echo "És un fitxer."
     # Obtenim la extensió del fitxer.
     nom=$(basename "$ruta")
-    ext="$´{nom##*.}"
+    ext="${nom##*.}"
     if [ "$ext" != "$nom" ]; then
       echo "La extensió del fitxer és: $ext"
     else
