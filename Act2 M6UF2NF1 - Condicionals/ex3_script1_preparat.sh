@@ -10,11 +10,29 @@ fi
 ruta=$1
 
 # Comprovem si existeix
-if [ ! -e "$ruta" ]; then
+if [ -e "$ruta" ]; then
+  # Mostrem el permisos del fitxer.
+
+  if [ -r "$ruta" ]; then
+        echo "Lectura: Sí"
+  else
+        echo "Lectura: No"
+  fi
+
+  if [ -w "$ruta" ]; then
+        echo "Escritura: Sí"
+  else
+        echo "Escritura: No"
+  fi
+
+  if [ -x "$ruta" ]; then
+        echo "Execusió: Sí"
+  else
+        echo "Execusió: No"
+  fi
+  
+else
   echo "El fitxer no existeix."
-  exit 1
 fi
 
-# Obté els permisos del fitxer
-permisos=$(stat -c "%a" "$ruta_del_fitxer")
-echo "$permisos"
+
