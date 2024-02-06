@@ -2,9 +2,11 @@
 #!/bin/bash
 
 # Verifica si el nombre de parametres és igual a 3
-if [ "$#" -eq 3 ]; then
-    echo "Nombre de paràmetres correcte."
-    # Tu código aquí
-else
-    echo "Error: Se esperaban 3 paràmetres."
-fi
+until [ $# -eq 3 ]; do
+    echo "Error: No s'han introduït exactament 3 paràmetres."
+    read -a "Introdueix exactament 3 paràmetres: " parametres  # Solicitar a l'usuari que torni a introduir els valors
+    set -- ${parametres[@]}  # Estableix els nous valors
+done
+
+# Si s'han introduït correctament els paràmetres, continuem amb el programa
+echo "S'han proporcionat correctamnet 3 paràmetres."
