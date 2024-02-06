@@ -4,15 +4,12 @@
 # Demana el nombre a l'usuari
 read -p "Introdueix el nombre enter: " cadena
 
-# Separa la cadena en nombre enters
-nombres=($cadena)
-
 # Inicialitzem un comptador de 0
 cont=0
 
 # Comptem els 0
-for num in "${nombres[@]}"; do
-    if [ "$num" -eq 0 ]; then
+for (( i=0; i<${#cadena}; i++ )); do
+    if [ "${cadena:i:1}" -eq 0 ]; then
         cont=$((cont + 1))
     fi
 done
