@@ -4,7 +4,7 @@
 #!/bin/bash
 
 # Obtenir els usuaris amb majúscules
-usu_majus=$(grep -Eo '[A-Z][a-z]*' /etc/passwd | sort -u)
+usu_majus=$(awk -F: '$1 ~ /[A-Z]/ {print $1}' /etc/passwd)
 
 # Verificar si hi han usuaris amb majúscules
 if [ -z "$usu_majus" ]; then
