@@ -24,6 +24,6 @@ while true; do
         echo "Fin del programa."
         break
     else
-        echo "$paraula" >> "$nom_del_arxiu"
+        echo "$paraula" >> "$arxiu"
     fi
 done
