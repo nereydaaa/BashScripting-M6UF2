@@ -33,7 +33,7 @@ for linea in $(cat "$arxiu"); do
     fi
 done
 
-if [ "$existe" = true ]; then
+if [ "$existeix" = true ]; then
     echo "La palabra/frase '$paraula' existeix a l'arxiu."
 else
     echo "La palabra/frase '$paraula' no existeix a l'arxiu."
