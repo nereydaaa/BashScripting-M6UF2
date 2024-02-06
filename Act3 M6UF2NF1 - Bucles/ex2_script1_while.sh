@@ -1,4 +1,5 @@
-# Realitza un script que llegeixi paraules i les guardi en un arxiu fins que s’escrigui “:>”. No oblidis que has de comprovar que hi ha un arxiu on emmagatzemar les paraules.
+# Realitza un script que llegeixi paraules i les guardi en un arxiu fins que s’escrigui “:>”. 
+# No oblidis que has de comprovar que hi ha un arxiu on emmagatzemar les paraules.
 #!bin/bash
 
 # Comprovem si s'ha pasat la ruta
