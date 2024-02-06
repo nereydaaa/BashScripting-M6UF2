@@ -4,7 +4,7 @@
 # Verifica si el nombre de parametres és igual a 3
 until [ $# -eq 3 ]; do
     echo "Error: No s'han introduït exactament 3 paràmetres."
-    read -a "Introdueix exactament 3 paràmetres: " parametres  # Solicitar a l'usuari que torni a introduir els valors
+    read -p "Introdueix exactament 3 paràmetres: " -a parametres  # Solicitar a l'usuari que torni a introduir els valors
     set -- ${parametres[@]}  # Estableix els nous valors
 done
 
