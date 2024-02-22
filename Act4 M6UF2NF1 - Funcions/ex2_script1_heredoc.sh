@@ -3,21 +3,13 @@
 #!/bin/bash
 
 # Variables
-host="tu_direccion_ip"
-usuario="tu_usuario"
+host="dir_ip"
+usuario="usu"
 
-# Comandos remotos a ejecutar
-comandos_remotos=$(cat <<'ENDSSH'
-echo "Executant comandes al sistema remot:"
-echo "-------------------------------------"
-echo "Directori actual:"
-pwd
-echo "Fitxers en el directori actual:"
-ls
-echo "Informació sobre la memòria disponible:"
-free -h
-ENDSSH
-)
-
-# Ejecutar comandos remotos a través de SSH
-ssh "$usuario@$host" "$comandos_remotos"
+# Utilitzar SSH juntament amb Heredoc per a l'execució de múltiples comandes
+ssh -tt ${usuario}@${host} << EOF
+    echo "Aquesta és la primera comanda executada en el sistema remot"
+    ls -l
+    pwd
+    echo "Aquesta és l'última comanda executada en el sistema remot"
+EOF
