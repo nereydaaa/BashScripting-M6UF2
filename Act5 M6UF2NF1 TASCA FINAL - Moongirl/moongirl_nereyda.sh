@@ -18,7 +18,7 @@ function comprova_ports() {
     nmap -p 1-1000 localhost
 
     # Guardar las salidas en variables
-    comprovacions_ports_output="$ports_output $apache_status"
+    ports_output="$ports_output $apache_status"
 }
 
 
@@ -108,43 +108,39 @@ function executar_comprovacions_remotes() {
     read -p "Ingrese el nombre del servidor: " server
 
     # Utilizar SSH para conectarnos y ejecutar las comprobaciones
-    comprovacions_servidor_output=$(ssh $user@$server "$(typeset -f); comprobaciones_servidor")
-    comprovacions_ports_output=$(ssh $user@$server "$(typeset -f); comprova_ports")
+    servidor_output=$(ssh $user@$server "$(typeset -f); comprovacions_servidor")
+    ports_output=$(ssh $user@$server "$(typeset -f); comprova_ports")
 }
 
 
 # Funció per mostrar els resultats en format HTML
-mostra_resultats_html() {
-    # Aquí es pot utilitzar un Here-Doc per generar el codi HTML amb els resultats
-    cat <<EOF
+function mostra_resultats_html() {
+    cat <<HTML
 <html>
 <head>
 <title>Resultats de les comprovacions del servidor</title>
 </head>
 <body>
 <h1>Resultats de les comprovacions del servidor</h1>
-<p>Els ports oberts són: [Resultats de la comprovació]</p>
-<p>Els serveis actius són: [Resultats de la comprovació]</p>
-<p>El funcionament intern del servidor: [Resultats de la comprovació]</p>
+<h2>Resultats dels ports oberts:</h2>
+<p>$ports_output</p>
+<h2>Resultats de les comprovacions de maquinari i programari:</h2>
+<p>$comprovacions_servidor_output</p>
 </body>
 </html>
-EOF
+HTML
 }
 
-# Funció per gestionar les trampes i netejar recursos abans de sortir
-neteja_recursos() {
-    echo "Netejant recursos..."
-    # Aquí es pot afegir qualsevol neteja necessària abans de sortir del script
+
+# Funció principal
+function main() {
+    # Executar les comprovacions en el servidor remot amb els arguments proporcionats
+    executar_comprovacions_remotes
+
+    # Mostrar els resultats en format HTML
+    mostra_resultats_html
 }
 
-# Trap per capturar senyals de sortida i netejar recursos abans de sortir
-trap neteja_recursos EXIT
 
-# Executa les comprovacions
-executa_comprovacions
-
-# Mostra els resultats en format HTML
-mostra_resultats_html
-
-# Finalment, si és necessari, es pot afegir la crida al Cron per automatitzar aquest script.
-
+# Executar la funció principal
+main
