@@ -125,7 +125,7 @@ function mostra_resultats_html() {
 <h2>Resultats dels ports oberts:</h2>
 <p>$ports_output</p>
 <h2>Resultats de les comprovacions de maquinari i programari:</h2>
-<p>$comprovacions_servidor_output</p>
+<p>$servidor_output</p>
 </body>
 </html>
 HTML
