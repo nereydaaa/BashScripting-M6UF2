@@ -1,12 +1,23 @@
-#/bin/bash
-
 #!/bin/bash
 
 # Funció per comprovar l'estat dels ports oberts
-comprova_ports() {
-    echo "Comprovant ports oberts..."
-    # Aquí es pot utilitzar l'eina netcat per comprovar l'estat dels ports
-    # Exemple: nc -zvw3 host 80
+function comprova_ports() {
+    echo "Comprovant ports oberts amb Nmap..."
+    
+    # Comprobar si Nmap está instal·lat
+    if ! command -v nmap &> /dev/null; then
+        echo "Nmap no está instal·lat. Instal·lant..."
+        
+        # Instal·lar Nmap en Ubuntu
+        sudo apt-get update
+        sudo apt-get install -y nmap
+    fi
+
+    # Utilizar Nmap para comprobar los puertos abiertos
+    nmap -p 1-1000 localhost
+
+    # Guardar las salidas en variables
+    comprovacions_ports="$ports_output $apache_status"
 }
 
 # Funció per comprovar l'estat dels serveis actius
