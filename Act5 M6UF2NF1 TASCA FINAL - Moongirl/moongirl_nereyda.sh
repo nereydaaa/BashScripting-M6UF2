@@ -172,7 +172,7 @@ function executar_comprovacions_remotes() {
     read -p "Ingrese el nombre del servidor: " server
 
     # Comprovar i instal·lar les eines necessàries
-    instalar_eines
+    eines=$(ssh $user@$server "$(typeset -f); instalar_eines")
 
     # Utilizar SSH para conectarnos y ejecutar las comprobaciones
     servidor_output=$(ssh $user@$server "$(typeset -f); comprovacions_servidor")
