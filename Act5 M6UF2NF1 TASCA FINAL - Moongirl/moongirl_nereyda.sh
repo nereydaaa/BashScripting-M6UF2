@@ -5,6 +5,9 @@
 function instalar_eines() {
     echo "Comprovant la instal·lació de les eines necessàries..."
 
+    # Solicitar la contrasenya de sudo una sola vez al principio
+    sudo -v
+
     # Llista d'eines a verificar i instal·lar si és necessari
     eines=("nmap" "speedtest-cli" "linux-tools-common" "sysstat" "iftop" "smartmontools")
 
