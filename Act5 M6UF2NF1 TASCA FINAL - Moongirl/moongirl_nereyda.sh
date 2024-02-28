@@ -103,54 +103,6 @@ function comprovacions_servidor() {
 }
 
 
-# Funció per comprovar l'estat de la connexió de xarxa, la velocitat i la disponibilitat dels recursos de xarxa
-function comprova_xarxa() {
-    echo "<h2>Comprovació de recursos de xarxa en curs...</h2>"
-    
-    echo "<h2>Comprovació de l'estat de la connexió de xarxa</h2>"
-    echo "<pre>"
-    ip a
-    echo "</pre>"
-
-    echo "<h2>Comprovació de la velocitat de la connexió de xarxa</h2>"
-    echo "<pre>"
-    speedtest-cli
-    echo "</pre>"
-
-    echo "<h2>Comprovació de la disponibilitat dels recursos de xarxa</h2>"
-    echo "<pre>"
-    ping -c 5 google.com
-    echo "</pre>"
-}
-
-
-# Funció per realitzar comprovacions de rendiment
-function comprova_rendiment() {
-    echo "<h2>Comprovació de rendiment en curs...</h2>"
-    
-    echo "<h2>Executant proves de rendiment...</h2>"
-    echo "<pre>"
-
-    # Mostrar estadísticas de uso de memoria, CPU y E/S
-    echo "<h3>Estadísticas de uso de memoria, CPU y E/S:</h3>"
-    vmstat 1
-
-    # Mostrar estadísticas de E/S del sistema
-    echo "<h3>Estadísticas de E/S del sistema:</h3>"
-    iostat -x 1
-
-    # Mostrar estadísticas del sistema en tiempo real
-    echo "<h3>Estadísticas del sistema en tiempo real:</h3>"
-    sar -n DEV 1
-
-    # Realizar pruebas de rendimiento con herramientas como Perf
-    echo "<h3>Pruebas de rendimiento con Perf:</h3>"
-    perf stat -a sleep 5
-    
-    echo "</pre>"
-}
-
-
 # Funció per executar les comprovacions al servidor remot
 function executar_comprovacions_remotes() {
     echo "Connectant al servidor remot..."
@@ -175,8 +127,6 @@ function executar_comprovacions_remotes() {
     # Utilitzar SSH per connectar-nos i executar les comprovacions
     servidor_output=$(ssh $user@$server "$(typeset -f); comprovacions_servidor")
     ports_output=$(ssh $user@$server "$(typeset -f); comprova_ports")
-    #xarxa_output=$(ssh $user@$server "$(typeset -f); comprova_xarxa")
-    rendiment_output=$(ssh $user@$server "$(typeset -f); comprova_rendiment")
 }
 
 
@@ -194,10 +144,6 @@ function mostra_resultats_html() {
 <p>$ports_output</p>
 <h2>Resultats de les comprovacions de maquinari i programari:</h2>
 <p>$servidor_output</p>
-<h2>Resultats de les comprovacions de la xarxa:</h2>
-<p>$xarxa_output</p>
-<h2>Resultats de les comprovacions de rendiment:</h2>
-<p>$rendiment_output</p>
 </body>
 </html>
 HTML
