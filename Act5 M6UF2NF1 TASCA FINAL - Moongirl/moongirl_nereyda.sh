@@ -166,11 +166,11 @@ function executar_comprovacions_remotes() {
     read -p "Introdueix el nom del servidor: " server
 
     # Comprovar si la clau SSH existeix
-    if [ ! -f ~/.ssh/id_rsa ]; then
-        echo "Creant una nova clau SSH..."
-        ssh-keygen -t rsa -b 4096 -C "namoresr@ies-sabadell.cat"
-        echo "Clau SSH creada correctament."
-    fi
+    #if [ ! -f ~/.ssh/id_rsa ]; then
+       # echo "Creant una nova clau SSH..."
+      #  ssh-keygen -t rsa -b 4096 -C "namoresr@ies-sabadell.cat"
+     #   echo "Clau SSH creada correctament."
+    #fi
 
     # Assignar la comanda ssh a una variable
     ssh_command="ssh -i ~/.ssh/id_rsa $user@$server"
@@ -181,8 +181,8 @@ function executar_comprovacions_remotes() {
     # Utilitzar SSH per connectar-nos i executar les comprovacions
     servidor_output=$(ssh $user@$server "$(typeset -f); comprovacions_servidor")
     ports_output=$(ssh $user@$server "$(typeset -f); comprova_ports")
-    xarxa_output=$(ssh $user@$server "$(typeset -f); comprova_xarxa")
-    rendiment_output=$(ssh $user@$server "$(typeset -f); comprova_rendiment")
+    #xarxa_output=$(ssh $user@$server "$(typeset -f); comprova_xarxa")
+    #rendiment_output=$(ssh $user@$server "$(typeset -f); comprova_rendiment")
 }
 
 
