@@ -1,18 +1,34 @@
 #!/bin/bash
 
 
+# Funció per instal·lar les eines necessàries si no estan instal·lades
+function instalar_eines() {
+    echo "Comprovant la instal·lació de les eines necessàries..."
+
+    # Llista d'eines a verificar i instal·lar si és necessari
+    eines=("nmap" "speedtest-cli" "linux-tools-common" "sysstat" "iftop" "smartmontools")
+
+    # Verificar cada eina i, si no està instal·lada, instal·lar-la
+    for eina in "${eines[@]}"; do
+        if ! command -v "$eina" &> /dev/null; then
+            echo "$eina no està instal·lada. Instal·lant..."
+            if [ "$eina" == "linux-tools-common" ]; then
+                sudo apt-get install -y linux-tools-common
+            else
+                sudo apt-get install -y "$eina"
+            fi
+        else
+            echo "$eina ja està instal·lada."
+        fi
+    done
+
+    echo "Instal·lació d'eines completada."
+}
+
+
 # Funció per comprovar l'estat dels ports oberts
 function comprova_ports() {
     echo "Comprovant ports oberts amb Nmap..."
-    
-    # Comprobar si Nmap está instal·lat
-    if ! command -v nmap &> /dev/null; then
-        echo "Nmap no está instal·lat. Instal·lant..."
-        
-        # Instal·lar Nmap en Ubuntu
-        sudo apt-get update
-        sudo apt-get install -y nmap
-    fi
 
     # Utilizar Nmap para comprobar los puertos abiertos
     nmap -p 1-1000 localhost
@@ -99,6 +115,54 @@ function comprovacions_servidor() {
 }
 
 
+# Funció per comprovar l'estat de la connexió de xarxa, la velocitat i la disponibilitat dels recursos de xarxa
+function comprova_xarxa() {
+    echo "<h2>Comprovació de recursos de xarxa en curs...</h2>"
+    
+    echo "<h2>Comprovació de l'estat de la connexió de xarxa</h2>"
+    echo "<pre>"
+    ip a
+    echo "</pre>"
+
+    echo "<h2>Comprovació de la velocitat de la connexió de xarxa</h2>"
+    echo "<pre>"
+    speedtest-cli
+    echo "</pre>"
+
+    echo "<h2>Comprovació de la disponibilitat dels recursos de xarxa</h2>"
+    echo "<pre>"
+    ping -c 5 google.com
+    echo "</pre>"
+}
+
+
+# Funció per realitzar comprovacions de rendiment
+function comprova_rendiment() {
+    echo "<h2>Comprovació de rendiment en curs...</h2>"
+    
+    echo "<h2>Executant proves de rendiment...</h2>"
+    echo "<pre>"
+
+    # Mostrar estadísticas de uso de memoria, CPU y E/S
+    echo "<h3>Estadísticas de uso de memoria, CPU y E/S:</h3>"
+    vmstat 1
+
+    # Mostrar estadísticas de E/S del sistema
+    echo "<h3>Estadísticas de E/S del sistema:</h3>"
+    iostat -x 1
+
+    # Mostrar estadísticas del sistema en tiempo real
+    echo "<h3>Estadísticas del sistema en tiempo real:</h3>"
+    sar -n DEV 1
+
+    # Realizar pruebas de rendimiento con herramientas como Perf
+    echo "<h3>Pruebas de rendimiento con Perf:</h3>"
+    perf stat -a sleep 5
+    
+    echo "</pre>"
+}
+
+
 # Función para ejecutar las comprobaciones en el servidor remoto
 function executar_comprovacions_remotes() {
     echo "Conectando al servidor remoto..."
@@ -110,12 +174,14 @@ function executar_comprovacions_remotes() {
     # Utilizar SSH para conectarnos y ejecutar las comprobaciones
     servidor_output=$(ssh $user@$server "$(typeset -f); comprovacions_servidor")
     ports_output=$(ssh $user@$server "$(typeset -f); comprova_ports")
+    xarxa_output=$(ssh $user@$server "$(typeset -f); comprova_xarxa")
+    rendiment_output=$(ssh $user@$server "$(typeset -f); comprova_rendiment")
 }
 
 
 # Funció per mostrar els resultats en format HTML
 function mostra_resultats_html() {
-    cat <<HTML
+    cat <<HTML > html_resultats.html
 <html>
 <head>
 <title>Resultats de les comprovacions del servidor</title>
@@ -126,20 +192,30 @@ function mostra_resultats_html() {
 <p>$ports_output</p>
 <h2>Resultats de les comprovacions de maquinari i programari:</h2>
 <p>$servidor_output</p>
+<h2>Resultats de les comprovacions de la xarxa:</h2>
+<p>$xarxa_output</p>
+<h2>Resultats de les comprovacions de rendiment:</h2>
+<p>$rendiment_output</p>
 </body>
 </html>
 HTML
+    # Mostra els resultats del documents HTML creat
+    cat html_resultats.html
 }
 
 
 # Funció principal
 function main() {
+    # Comprovar i instal·lar les eines necessàries
+    instalar_eines
+
     # Executar les comprovacions en el servidor remot amb els arguments proporcionats
     executar_comprovacions_remotes
 
     # Mostrar els resultats en format HTML
     mostra_resultats_html
 }
+
 
 
 # Executar la funció principal
