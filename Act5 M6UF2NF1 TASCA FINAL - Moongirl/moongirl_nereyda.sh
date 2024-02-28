@@ -17,12 +17,6 @@ function instalar_eines() {
 # Funció per comprovar l'estat dels ports oberts
 function comprova_ports() {
     echo "Comprovacions de ports oberts en curs..."
-    # Comprovem si Nmap està instal·lat
-    if ! command -v nmap &> /dev/null; then
-        echo "Nmap no està instal·lat. S'està instal·lant..."
-        sudo apt-get update
-        sudo apt-get install -y nmap
-    fi
 
     # Utilitzem Nmap per comprovar els ports oberts
     nmap -p 1-1000 localhost
@@ -166,17 +160,17 @@ function executar_comprovacions_remotes() {
     read -p "Introdueix el nom del servidor: " server
 
     # Comprovar si la clau SSH existeix
-    #if [ ! -f ~/.ssh/id_rsa ]; then
-       # echo "Creant una nova clau SSH..."
-      #  ssh-keygen -t rsa -b 4096 -C "namoresr@ies-sabadell.cat"
-     #   echo "Clau SSH creada correctament."
-    #fi
+    if [ ! -f ~/.ssh/id_rsa ]; then
+        echo "Creant una nova clau SSH..."
+        ssh-keygen -t rsa -b 4096 -C "namoresr@ies-sabadell.cat"
+        echo "Clau SSH creada correctament."
+    fi
 
     # Assignar la comanda ssh a una variable
     ssh_command="ssh -i ~/.ssh/id_rsa $user@$server"
 
     # Comprovar i instal·lar les eines necessàries al servidor remot
-    # eines=$($ssh_command "$(typeset -f); instalar_eines")
+    eines=$(ssh $user@$server "$(typeset -f); instalar_eines")
 
     # Utilitzar SSH per connectar-nos i executar les comprovacions
     servidor_output=$(ssh $user@$server "$(typeset -f); comprovacions_servidor")
