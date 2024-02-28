@@ -163,22 +163,32 @@ function comprova_rendiment() {
 }
 
 
-# Función para ejecutar las comprobaciones en el servidor remoto
+# Funció per executar les comprovacions al servidor remot
 function executar_comprovacions_remotes() {
-    echo "Conectando al servidor remoto..."
+    echo "Connectant al servidor remot..."
 
-    # Solicitar al usuario los nombres de usuario y del servidor
-    read -p "Ingrese el nombre de usuario: " user
-    read -p "Ingrese el nombre del servidor: " server
+    # Sol·licitar a l'usuari els noms d'usuari i del servidor
+    read -p "Introdueix el nom d'usuari: " user
+    read -p "Introdueix el nom del servidor: " server
 
-    # Comprovar i instal·lar les eines necessàries
-    eines=$(ssh $user@$server "$(typeset -f); instalar_eines")
+    # Comprovar si la clau SSH existeix
+    if [ ! -f ~/.ssh/id_rsa ]; then
+        echo "Creant una nova clau SSH..."
+        ssh-keygen -t rsa -b 4096 -C "namoresr@ies-sabadell.cat"
+        echo "Clau SSH creada correctament."
+    fi
 
-    # Utilizar SSH para conectarnos y ejecutar las comprobaciones
-    servidor_output=$(ssh $user@$server "$(typeset -f); comprovacions_servidor")
-    ports_output=$(ssh $user@$server "$(typeset -f); comprova_ports")
-    xarxa_output=$(ssh $user@$server "$(typeset -f); comprova_xarxa")
-    rendiment_output=$(ssh $user@$server "$(typeset -f); comprova_rendiment")
+    # Assignar la comanda ssh a una variable
+    ssh_command="ssh -i ~/.ssh/id_rsa $user@$server"
+
+    # Comprovar i instal·lar les eines necessàries al servidor remot
+    eines=$($ssh_command "$(typeset -f); instalar_eines")
+
+    # Utilitzar SSH per connectar-nos i executar les comprovacions
+    servidor_output=$($ssh_command "$(typeset -f); comprovacions_servidor")
+    ports_output=$($ssh_command "$(typeset -f); comprova_ports")
+    xarxa_output=$($ssh_command "$(typeset -f); comprova_xarxa")
+    rendiment_output=$($ssh_command "$(typeset -f); comprova_rendiment")
 }
 
 
