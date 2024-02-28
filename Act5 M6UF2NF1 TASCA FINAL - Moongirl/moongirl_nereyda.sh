@@ -189,6 +189,7 @@ function mostra_resultats_html() {
 </head>
 <body>
 <h1>Resultats de les comprovacions del servidor</h1>
+<p>$eines</p>
 <h2>Resultats dels ports oberts:</h2>
 <p>$ports_output</p>
 <h2>Resultats de les comprovacions de maquinari i programari:</h2>
