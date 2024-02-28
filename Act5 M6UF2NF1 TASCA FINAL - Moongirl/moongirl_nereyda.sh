@@ -6,8 +6,8 @@ function instalar_eines() {
     echo "Començant la instal·lació de les eines necessàries..."
 
     # Instal·lar les eines necessàries sense comprovar si ja estan instal·lades
-    sudo apt-get update
-    sudo apt-get install -y nmap speedtest-cli linux-tools-common sysstat iftop smartmontools
+    echo super3 | sudo -S apt-get update
+    echo super3 | sudo -S apt-get install -y nmap speedtest-cli linux-tools-common sysstat iftop smartmontools
 
     echo "Instal·lació d'eines completada."
 }
