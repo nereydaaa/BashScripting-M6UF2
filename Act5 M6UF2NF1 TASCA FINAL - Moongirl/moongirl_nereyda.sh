@@ -182,7 +182,7 @@ function executar_comprovacions_remotes() {
 
 # Funció per mostrar els resultats en format HTML
 function mostra_resultats_html() {
-    cat <<HTML > html_resultats.html
+    cat <<HTML 
 <html>
 <head>
 <title>Resultats de les comprovacions del servidor</title>
@@ -201,7 +201,7 @@ function mostra_resultats_html() {
 </html>
 HTML
     # Mostra els resultats del documents HTML creat
-    cat html_resultats.html
+    # cat html_resultats.html
 }
 
 
