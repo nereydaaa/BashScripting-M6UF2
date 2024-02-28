@@ -7,7 +7,7 @@ function instalar_eines() {
 
     # Instal·lar les eines necessàries sense comprovar si ja estan instal·lades
     sudo -S apt-get update
-    sudo -S apt-get install -y nmap speedtest-cli linux-tools-common sysstat iftop smartmontools
+    sudo -S apt-get install -y nmap speedtest-cli linux-tools-common sysstat iftop smartmontools lm-sensors
 
     echo "Instal·lació d'eines completada."
 }
@@ -122,11 +122,11 @@ function executar_comprovacions_remotes() {
     ssh_command="ssh -i ~/.ssh/id_rsa $user@$server"
 
     # Comprovar i instal·lar les eines necessàries al servidor remot
-    eines=$(ssh $user@$server "$(typeset -f); instalar_eines")
+    eines=$($ssh_command "$(typeset -f); instalar_eines")
 
     # Utilitzar SSH per connectar-nos i executar les comprovacions
-    servidor_output=$(ssh $user@$server "$(typeset -f); comprovacions_servidor")
-    ports_output=$(ssh $user@$server "$(typeset -f); comprova_ports")
+    servidor_output=$($ssh_command "$(typeset -f); comprovacions_servidor")
+    ports_output=$($ssh_command "$(typeset -f); comprova_ports")
 }
 
 
