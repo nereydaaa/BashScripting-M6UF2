@@ -6,7 +6,7 @@ function instalar_eines() {
     echo "Comprovant la instal·lació de les eines necessàries..."
 
     # Llista d'eines a verificar i instal·lar si és necessari
-    eines=("sudo" "nmap" "speedtest-cli" "linux-tools-common" "sysstat" "iftop" "smartmontools")
+    eines=("nmap" "speedtest-cli" "linux-tools-common" "sysstat" "iftop" "smartmontools")
 
     # Verificar cada eina i, si no està instal·lada, instal·lar-la
     for eina in "${eines[@]}"; do
