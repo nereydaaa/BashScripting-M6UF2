@@ -6,8 +6,8 @@ function instalar_eines() {
     echo "Començant la instal·lació de les eines necessàries..."
 
     # Instal·lar les eines necessàries sense comprovar si ja estan instal·lades
-    echo super3 | sudo -S apt-get update
-    echo super3 | sudo -S apt-get install -y nmap speedtest-cli linux-tools-common sysstat iftop smartmontools
+    sudo -S apt-get update
+    sudo -S apt-get install -y nmap speedtest-cli linux-tools-common sysstat iftop smartmontools
 
     echo "Instal·lació d'eines completada."
 }
@@ -67,7 +67,7 @@ function comprovacions_servidor() {
 
     echo "<h2>Comprovació de l'estat del disc SMART</h2>"
     echo "<pre>"
-    sudo smartctl -a /dev/sda
+    sudo -S smartctl -a /dev/sda
     echo "</pre>"
 
     echo "<h2>Comprovació del tràfic de xarxa</h2>"
@@ -175,8 +175,8 @@ function executar_comprovacions_remotes() {
     # Utilitzar SSH per connectar-nos i executar les comprovacions
     servidor_output=$(ssh $user@$server "$(typeset -f); comprovacions_servidor")
     ports_output=$(ssh $user@$server "$(typeset -f); comprova_ports")
-    xarxa_output=$(ssh $user@$server "$(typeset -f); comprova_xarxa")
-    #rendiment_output=$(ssh $user@$server "$(typeset -f); comprova_rendiment")
+    #xarxa_output=$(ssh $user@$server "$(typeset -f); comprova_xarxa")
+    rendiment_output=$(ssh $user@$server "$(typeset -f); comprova_rendiment")
 }
 
 
