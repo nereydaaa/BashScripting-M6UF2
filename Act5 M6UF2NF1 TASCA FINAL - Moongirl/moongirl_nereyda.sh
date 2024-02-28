@@ -1,34 +1,17 @@
 #!/bin/bash
 
 
-# Funció per instal·lar les eines necessàries si no estan instal·lades
+# Funció per instal·lar les eines necessàries sense comprovar si ja estan instal·lades
 function instalar_eines() {
-    echo "Comprovant la instal·lació de les eines necessàries..."
+    echo "Començant la instal·lació de les eines necessàries..."
 
-    # Solicitar la contrasenya de sudo una sola vez al principio
-    echo "Introduïu la contrasenya de sudo:"
-    read -s sudo_password
-    echo "$sudo_password" | sudo -Sv
-
-    # Llista d'eines a verificar i instal·lar si és necessari
-    eines=("nmap" "speedtest-cli" "linux-tools-common" "sysstat" "iftop" "smartmontools")
-
-    # Verificar cada eina i, si no està instal·lada, instal·lar-la
-    for eina in "${eines[@]}"; do
-        if ! command -v "$eina" &> /dev/null; then
-            echo "$eina no està instal·lada. Instal·lant..."
-            if [ "$eina" == "linux-tools-common" ]; then
-                sudo apt-get install -y linux-tools-common
-            else
-                sudo apt-get install -y "$eina"
-            fi
-        else
-            echo "$eina ja està instal·lada."
-        fi
-    done
+    # Instal·lar les eines necessàries sense comprovar si ja estan instal·lades
+    sudo apt-get update
+    sudo apt-get install -y nmap speedtest-cli linux-tools-common sysstat iftop smartmontools
 
     echo "Instal·lació d'eines completada."
 }
+
 
 
 # Funció per comprovar l'estat dels ports oberts
