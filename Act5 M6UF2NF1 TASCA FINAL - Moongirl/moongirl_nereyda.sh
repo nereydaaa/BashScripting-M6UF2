@@ -175,8 +175,8 @@ function executar_comprovacions_remotes() {
     # Utilitzar SSH per connectar-nos i executar les comprovacions
     servidor_output=$(ssh $user@$server "$(typeset -f); comprovacions_servidor")
     ports_output=$(ssh $user@$server "$(typeset -f); comprova_ports")
-    #xarxa_output=$(ssh $user@$server "$(typeset -f); comprova_xarxa")
-    #rendiment_output=$(ssh $user@$server "$(typeset -f); comprova_rendiment")
+    xarxa_output=$(ssh $user@$server "$(typeset -f); comprova_xarxa")
+    rendiment_output=$(ssh $user@$server "$(typeset -f); comprova_rendiment")
 }
 
 
