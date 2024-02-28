@@ -171,6 +171,9 @@ function executar_comprovacions_remotes() {
     read -p "Ingrese el nombre de usuario: " user
     read -p "Ingrese el nombre del servidor: " server
 
+    # Comprovar i instal·lar les eines necessàries
+    instalar_eines
+
     # Utilizar SSH para conectarnos y ejecutar las comprobaciones
     servidor_output=$(ssh $user@$server "$(typeset -f); comprovacions_servidor")
     ports_output=$(ssh $user@$server "$(typeset -f); comprova_ports")
@@ -206,16 +209,12 @@ HTML
 
 # Funció principal
 function main() {
-    # Comprovar i instal·lar les eines necessàries
-    instalar_eines
-
     # Executar les comprovacions en el servidor remot amb els arguments proporcionats
     executar_comprovacions_remotes
 
     # Mostrar els resultats en format HTML
     mostra_resultats_html
 }
-
 
 
 # Executar la funció principal
